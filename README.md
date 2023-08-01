@@ -41,7 +41,12 @@ The `script` folder provides the example of invoke compression and filtering.
 
 ## Graph analytics on CPU
 
+CompressGraph implements multi-core parallel graph analytics on CPU based on [Ligra](https://github.com/jshun/ligra.git).
+
 ## Graph analytics on GPU
+
+CompressGraph implements multi-core parallel graph analytics on CPU based on [Gunrock](https://github.com/gunrock/gunrock.git).
+
 
 ## Citation
 

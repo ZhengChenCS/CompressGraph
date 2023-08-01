@@ -1,0 +1,6 @@
+[submodule "deps/ligra"]
+	path = deps/ligra
+	url = https://github.com/jshun/ligra.git
+[submodule "deps/gunrock"]
+	path = deps/gunrock
+	url = https://github.com/gunrock/gunrock.git

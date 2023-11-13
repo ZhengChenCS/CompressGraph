@@ -31,6 +31,7 @@ The initial input graph format should be in the [adjacency graph format](https:/
 SNAP format:
 
 ```
+src dst
 0 1
 0 2
 2 0
@@ -41,15 +42,15 @@ Adjacency Graph format:
 
 ```
 AdjacencyGraph
-3
-4
-0
-2
-2
-1
-2
-0
-1
+3 <The number of vertices>
+4 <The number of edges>
+0 <o0>
+2 <o1>
+2 <o2>
+1 <e0>
+2 <e1>
+0 <e2>
+1 <e3>
 ```
 
 ## 3. CompressGraph Compression

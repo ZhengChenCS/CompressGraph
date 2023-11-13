@@ -40,10 +40,16 @@ SNAP format:
 Adjacency Graph format:
 
 ```
-0 1
-0 2
-2 0
-2 1
+AdjacencyGraph
+3
+4
+0
+2
+2
+1
+2
+0
+1
 ```
 
 ## 3. CompressGraph Compression

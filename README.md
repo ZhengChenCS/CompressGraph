@@ -55,7 +55,27 @@ AdjacencyGraph
 
 ## 3. CompressGraph Compression
 
-The Compression Mudule accepts binary CSR(Compressed Sparse Row) graph data as input. The `dataset` folder provides an example.
+### 3.1 Data Preparation
+
+The Compression Mudule accepts binary CSR(Compressed Sparse Row) graph data as input, which contains a `vlist` and a `elist` array. 
+We provide two programs for converting graph files from edgelist and adjacency graph format to CSR format.
+User can invoke them as follows:
+
+* Edgelist to CSR 
+```shell
+edgelist2csr < <edgelist.txt>
+```
+
+* Adjacency graph to CSR
+```shell
+adj2csr < <adjgraph.txt>
+```
+
+The two programs will generate two output files in CSR format: `csr_vlist.bin` and `csr_elist.bin` in the current directory.
+
+### 3.2 Graph Compression 
+
+The `dataset` folder provides an example.
 
 To compress a input graph, run:
 ```shell

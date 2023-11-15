@@ -105,7 +105,7 @@ $save_degree $csr_vlist
 $gene_rule_order $csr_vlist $csr_elist $info
 ```
 
-We provide a `data_prepare.sh` to exectute these program in `script` directory.
+We provide a script to execute the data prepareation process in `script` directory.
 
 ### 4.2 Run Applications
 
@@ -121,9 +121,6 @@ Users can execute graph applications using the following approach:
 ```
 
 We provide scripts in `script/cpu` directory to execute these programs.
-
-
-
 
 ## 5. Citation
 

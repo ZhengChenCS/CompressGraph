@@ -244,6 +244,8 @@ int main(int argc, char **argv) {
     int v_cnt = read_binary2vector(pvlist, csr_vlist);
     std::vector<int> csr_elist;
     int e_cnt = read_binary2vector(pelist, csr_elist);
+    std::cout << v_cnt << std::endl;
+    std::cout << e_cnt << std::endl;
     fprintf(stderr, "compress start...\n");
     double start = timestamp();
     v_cnt -= 1;

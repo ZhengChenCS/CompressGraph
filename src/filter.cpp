@@ -125,6 +125,6 @@ int main(int argc, char **argv) {
     fwrite(&new_elist[0], sizeof(int), new_elist.size(), felist);
     finfo = fopen("info.bin", "w");
     fwrite(&vertex_cnt, sizeof(int), 1, finfo);
-    fwrite(&rule_cnt, sizeof(int), 1, finfo);
+    fwrite(&newRule_cnt, sizeof(int), 1, finfo);
     return 0;
 }

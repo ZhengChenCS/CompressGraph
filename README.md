@@ -105,7 +105,7 @@ $save_degree $csr_vlist
 $gene_rule_order $csr_vlist $csr_elist $info
 ```
 
-We provide a `data_generation.sh` to exectute these program in `script` directory.
+We provide a `data_prepare.sh` to exectute these program in `script` directory.
 
 ### 4.2 Run Applications
 

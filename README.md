@@ -16,7 +16,7 @@ https://dl.acm.org/doi/10.1145/3588684
  - Optional(GPU): [Gunrock](https://github.com/gunrock/gunrock.git)
 
 ### 2.2 Compilation
-```bash
+```bash`
 git clone https://github.com/ZhengChenCS/CompressGraph.git --recursive
 cd CompressGraph
 mkdir -p build
@@ -115,9 +115,9 @@ Users can execute graph applications using the following approach:
 ./bfs_cpu -r 1 $file
 ./cc_cpu $file
 ./sssp_cpu -r 1 $file
-./pagerank -maxiters 10 -i $info -d $degree -o $order $file
-./topo -i $info $file
-./hits -maxiters 10 -i $info -o $order $file
+./pagerank_cpu -maxiters 10 -i $info -d $degree -o $order $file
+./topo_cpu -i $info $file
+./hits_cpu -maxiters 10 -i $info -o $order $file
 ```
 
 We provide scripts in `script/cpu` directory to execute these programs.

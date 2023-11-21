@@ -16,7 +16,8 @@ https://dl.acm.org/doi/10.1145/3588684
  - Optional(GPU): [Gunrock](https://github.com/gunrock/gunrock.git)
 
 ### 2.2 Compilation
-```bash`
+
+```shell
 git clone https://github.com/ZhengChenCS/CompressGraph.git --recursive
 cd CompressGraph
 mkdir -p build

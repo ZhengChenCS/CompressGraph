@@ -123,6 +123,20 @@ Users can execute graph applications using the following approach:
 
 We provide scripts in `script/cpu` directory to execute these programs.
 
+### 4.3 Run in one
+
+```shell
+cd script
+bash data_prepare.sh
+cd cpu
+bash bfs.sh
+bash sssp.sh
+bash cc.sh
+bash pagerank.sh
+bash topo.sh
+bash hits.sh
+```
+
 
 ## 5. Citation
 

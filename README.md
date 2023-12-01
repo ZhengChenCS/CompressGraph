@@ -123,7 +123,7 @@ Users can execute graph applications using the following approach:
 
 We provide scripts in `script/cpu` directory to execute these programs.
 
-### 4.3 Run in one
+### 4.3 Run applications with script
 
 ```shell
 cd script

@@ -19,6 +19,7 @@ include_directories(${PROJECT_SOURCE_DIR} ${PROJECT_DEPS_DIR})
 
 add_executable(compress src/compress.cpp core/compression/array.cc core/compression/basics.cc core/compression/hash.cc core/compression/heap.cc core/compression/records.cc)
 add_executable(filter src/filter.cpp)
+add_executable(filter_decomp src/filter_decomp.cpp)
 
 add_subdirectory(utils)
 

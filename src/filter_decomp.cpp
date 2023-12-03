@@ -20,10 +20,11 @@ typedef struct rule_info { // rule infomation
     }
 } rule_info;
 
-int threshold = 16;
+int freq_threshold = 4;
+int len_threshold = 4;
 
 inline bool judgeRule(int len, int freq) {
-    return (freq - 1) * (len - 1) - 1 <= threshold;
+    return (len < len_threshold) && (freq < freq_threshold);
 }
 
 void mergeRule(VertexT rule_id, std::vector<std::vector<VertexT>> &graph,
@@ -77,20 +78,21 @@ void initInfoForRule(std::vector<std::vector<VertexT>> &graph,
 }
 
 int main(int argc, char **argv) {
-    if (argc != 5) {
-        fprintf(stderr, "Usage: %s <vlist> <elsit> <info> <threadshold>\n", argv[0]);
+    if (argc != 6) {
+        fprintf(stderr, "Usage: %s <vlist> <elsit> <info> <freq_threadshold> <len_threshold>\n", argv[0]);
         return 0;
     }
     std::string pvlist = argv[1];
     std::string pelist = argv[2];
     std::string pinfo = argv[3];
+    freq_threshold = atoi(argv[4]);
+    len_threshold = atoi(argv[5]);
     std::vector<VertexT> vlist;
     std::vector<VertexT> elist;
     std::vector<VertexT> info;
     int v_cnt = read_binary2vector(pvlist, vlist);
     int e_cnt = read_binary2vector(pelist, elist);
     int n = read_binary2vector(pinfo, info);
-    threshold = atoi(argv[4]);
     int vertex_cnt = info[0];
     int rule_cnt = info[1];
     fprintf(stderr, "filter start...\n");

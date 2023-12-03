@@ -89,6 +89,10 @@ To filter the rule by the threshold(16 by default), run:
 filter <csr_vlist.bin> <csr_elist.bin> <info.bin> 16
 ```
 
+The filter program will filter out rules that meet `(freq - 1) * (len - 1) - 1 <= threshold;`, where `freq` is the frequency of rules, `len` is the length of rules.
+
+
+
 The `script` folder provides the example of invoke compression and filtering.
 
 ## 4. ComprassGraph Analytics

@@ -12,6 +12,7 @@ https://dl.acm.org/doi/10.1145/3588684
 ### 2.1 System Dependency
  - [CMake](https://gitlab.kitware.com/cmake/cmake)
  - OpenMP and C++17
+ - CUDA
  - Optional(CPU): [Ligra](https://github.com/jshun/ligra.git)
  - Optional(GPU): [Gunrock](https://github.com/gunrock/gunrock.git)
 
@@ -25,6 +26,9 @@ cd build
 cmake .. -DLIGRA=ON -DGUNROCK=ON
 make -j
 ```
+
+If you just want to run application on CPU, you can set `-DGUNROCK=OFF`.
+
 
 ### 2.3 Graph Input Format
 
@@ -102,7 +106,7 @@ The `filter_decomp` will filter out rules that meet `freq < freq_threshold || le
 
 ## 4. ComprassGraph Analytics
 
-We have implemented the CompressGraph analytic engine based on [Ligra](https://github.com/jshun/ligra.git) on CPU.
+We have implemented the CompressGraph analytic engine based on [Ligra](https://github.com/jshun/ligra.git) on CPU and [Gunrock](https://github.com/gunrock/gunrock.git) on GPU.
 
 ### 4.1 Data Prepareation
 
@@ -115,7 +119,7 @@ $save_degree $csr_vlist
 $gene_rule_order $csr_vlist $csr_elist $info
 ```
 
-We provide a script `data_prepare.sh` to execute the data prepareation process in `script` directory.
+We provide a script `data_prepare.sh` and `data_prepare_gpu.sh` to execute the data prepareation process in `script` directory.
 
 ### 4.2 Run Applications
 
@@ -130,7 +134,17 @@ Users can execute graph applications using the following approach:
 ./hits_cpu -maxiters 10 -i $info -o $order $file
 ```
 
-We provide scripts in `script/cpu` directory to execute these programs.
+```shell
+./bfs_gpu $file 0
+./cc_gpu $file
+./sssp_gpu $file $info 0
+./pagerank_gpu $file
+./hits_gpu $file
+./topo_gpu $file $info
+```
+
+
+We provide scripts in `script/cpu` and `script/gpu` directory to execute these programs.
 
 ### 4.3 Run applications with script
 
@@ -144,8 +158,14 @@ bash cc.sh
 bash pagerank.sh
 bash topo.sh
 bash hits.sh
+cd gpu
+bash bfs.sh
+bash sssp.sh
+bash cc.sh
+bash pagerank.sh
+bash topo.sh
+bash hits.sh
 ```
-
 
 ## 5. Citation
 

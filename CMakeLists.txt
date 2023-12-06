@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 project(CompressGraph 
-LANGUAGES C CXX CUDA
+LANGUAGES C CXX
 )
 
 
@@ -24,9 +24,15 @@ add_executable(filter_decomp src/filter_decomp.cpp)
 add_subdirectory(utils)
 
 option(LIGRA "compile CPU apps" OFF)
+option(GUNROCK "compile GPU apps" OFF)
 
 if(LIGRA)
     add_subdirectory(src/apps_ligra)
+endif()
+
+if(GUNROCK)
+    enable_language(CUDA)
+    add_subdirectory(src/apps_gunrock)
 endif()
 
 

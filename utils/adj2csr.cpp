@@ -11,8 +11,8 @@ int main()
     std::cin >> format;
     std::cin >> v_cnt;
     std::cin >> e_cnt; 
-    std::vector<VertexT> csr_vlist(v_cnt+1);
-    std::vector<VertexT> csr_elist(e_cnt);
+    std::vector<VertexT> csr_vlist;
+    std::vector<VertexT> csr_elist;
     VertexT offset;
     for(VertexT vid = 0; vid < v_cnt; ++vid){
         std::cin >> offset;

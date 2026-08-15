@@ -185,4 +185,54 @@ If you use our code, please cite our paper:
 ```
 
 
+## 6. Project Extensions (by hetvi3012)
 
+This section details additional features and analyses added to the original CompressGraph framework. All scripts mentioned are located in the `script` directory or its subdirectories.
+
+### 6.1 Triangle Counting (CPU)
+
+* **Goal:** Implements a parallel triangle counting algorithm that operates directly on the CompressGraph representation using the Ligra framework.
+* **Compilation:** The `triangle_cpu` executable is built automatically when compiling with `-DLIGRA=ON`. Ensure you have applied the `<cstdint>` header fix to the `deps/ligra` code.
+* **How to Run:**
+    ```bash
+    cd script/cpu
+    bash triangle.sh
+    ```
+* **Output:** Prints the total triangle count and the execution time to the console.
+
+### 6.2 Compression Threshold Analysis
+
+* **Goal:** Analyzes the trade-off between the compression rule filter threshold, the resulting graph size (compression ratio), and the performance of BFS.
+* **How to Run:**
+    1.  Ensure the baseline `.bin` files exist in `dataset/cnr-2000/compress/` by running `bash script/data_prepare.sh` once.
+    2.  Run the analysis script:
+        ```bash
+        cd script
+        ./analyze_threshold.sh
+        ```
+* **Output:** Prints a CSV table to the console showing `threshold`, `filtered_size_bytes`, `size_ratio`, and `bfs_time_seconds`. This data can be used to plot the trade-off curve.
+
+### 6.3 Testing on Different Graph Types
+
+* **Goal:** Evaluates the effectiveness of CompressGraph's rule-based compression and analytics performance on graph structures different from the default web graph. Tests on a collaboration network (`ca-GrQc`) and a road network (`roadNet-CA`).
+* **Data Preparation:**
+    1.  Download the datasets (run from the `dataset` directory):
+        ```bash
+        # Collaboration Network
+        wget [https://snap.stanford.edu/data/ca-GrQc.txt.gz](https://snap.stanford.edu/data/ca-GrQc.txt.gz)
+        gunzip ca-GrQc.txt.gz
+        grep -v "^#" ca-GrQc.txt > ca-GrQc.edgelist
+
+        # Road Network
+        wget [https://snap.stanford.edu/data/roadNet-CA.txt.gz](https://snap.stanford.edu/data/roadNet-CA.txt.gz)
+        gunzip roadNet-CA.txt.gz
+        grep -v "^#" roadNet-CA.txt > roadNet-CA.edgelist
+        ```
+* **How to Run:**
+    Use the `run_full_pipeline.sh` script, providing the base name of the graph edgelist file in the `dataset` directory. Run from the `script` directory:
+    ```bash
+    cd script
+    ./run_full_pipeline.sh ca-GrQc
+    ./run_full_pipeline.sh roadNet-CA
+    ```
+* **Output:** Creates a results directory for each graph (e.g., `ca-GrQc_results`, `roadNet-CA_results`) containing intermediate files, compression stats (`compress_stats.txt`), and prints analytics output to the console. Compare the compression ratios and run times against the `cnr-2000` graph. Note: PageRank may fail on these graphs.

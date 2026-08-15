@@ -15,4 +15,6 @@ target_compile_definitions(topo_cpu PRIVATE ${LIGRA_FLAG})
 target_compile_definitions(hits_cpu PRIVATE ${LIGRA_FLAG})
 
 
-
+add_executable(triangle_cpu triangle.cpp)
+target_compile_definitions(triangle_cpu PRIVATE ${LIGRA_FLAG})
+target_include_directories(triangle_cpu PRIVATE ${PROJECT_SOURCE_DIR})

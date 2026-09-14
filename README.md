@@ -12,7 +12,7 @@ https://dl.acm.org/doi/10.1145/3588684
 ### 2.1 System Dependency
  - [CMake](https://gitlab.kitware.com/cmake/cmake)
  - OpenMP and C++17
- - CUDA
+ - CUDA (optional, for GPU backends and applications)
  - Optional(CPU): [Ligra](https://github.com/jshun/ligra.git)
  - Optional(GPU): [Gunrock](https://github.com/gunrock/gunrock.git)
 
@@ -79,7 +79,19 @@ adj2csr < <adjgraph.txt>
 
 The two programs will generate two output files in CSR format: `csr_vlist.bin` and `csr_elist.bin` in the current directory.
 
-### 3.2 Graph Compression 
+### 3.2 Parallel CPU and GPU Compression
+
+New native batch backends accelerate graph compression with OpenMP or optional CUDA. They preserve exact adjacency sequences and write the existing binary CSR/`info.bin` format. They do not require a GNN framework or the analytics engines.
+
+```shell
+cmake -S . -B build -DBATCH_CUDA=OFF
+cmake --build build -j
+./bin/compress_batch_cpu csr_vlist.bin csr_elist.bin output/cpu --threads 20 --verify
+```
+
+For GPU builds, enable `-DBATCH_CUDA=ON` and set `CMAKE_CUDA_ARCHITECTURES` for your device, then use `compress_batch_gpu`. See [build instructions, GPU commands, timing boundaries, options and algorithm details](docs/batch-compression.md).
+
+### 3.3 Original Graph Compression
 
 The `dataset` folder provides an example.
 

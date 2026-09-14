@@ -5,6 +5,7 @@
 #include <unistd.h>
 
 #include <ctime>
+#include <climits>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -77,7 +78,7 @@ void prepare(std::vector<int> &inter) {
     purgeHeap(&Heap);
 }
 
-void repair(std::vector<int> &inter, std::vector<Tpair> &rule) {
+void repair(std::vector<int> &inter, std::vector<Tpair> &rule, int min_frequency = 2) {
     int oid, id, cpos;
     Trecord *rec, *orec;
     Tpair pair;
@@ -86,6 +87,7 @@ void repair(std::vector<int> &inter, std::vector<Tpair> &rule) {
         if (oid == -1)
             break; // the end!!
         orec = &Rec.records[oid];
+        if (orec->freq < min_frequency) break;
         cpos = orec->cpos; // first position in C
         rule.push_back(orec->pair);
 #ifdef DEBUG
@@ -233,9 +235,19 @@ inline int convert(int ID, int vertex_cnt) {
 }
 
 int main(int argc, char **argv) {
-    if (argc != 3) {
-        fprintf(stderr, "Usage: compress csr_vlist csr_elist\n");
+    if (argc != 3 && argc != 4) {
+        fprintf(stderr, "Usage: compress csr_vlist csr_elist [min_frequency >= 2]\n");
         return 0;
+    }
+    int min_frequency = 2;
+    if (argc == 4) {
+        char *end = nullptr;
+        long value = strtol(argv[3], &end, 10);
+        if (*end || value < 2 || value > INT_MAX) {
+            fprintf(stderr, "min_frequency must be an integer >= 2\n");
+            return 1;
+        }
+        min_frequency = static_cast<int>(value);
     }
     std::string pvlist = argv[1];
     std::string pelist = argv[2];
@@ -250,14 +262,21 @@ int main(int argc, char **argv) {
     double start = timestamp();
     v_cnt -= 1;
     std::vector<int> inter;
+    inter.reserve(csr_elist.size() + csr_vlist.size());
     insert_spliter(csr_vlist, csr_elist, inter, v_cnt);
     std::cout << inter.size() << std::endl;
     alph = v_cnt * 2;
     prepare(inter);
     std::vector<Tpair> rule;
-    repair(inter, rule);
+    repair(inter, rule, min_frequency);
+    destroyHeap(&Heap);
+    destroyHash(&Hash);
+    destroyRecords(&Rec);
+    free(L);
     std::vector<int> out_vlist;
     std::vector<int> out_elist;
+    out_vlist.reserve(csr_vlist.size() + rule.size());
+    out_elist.reserve(csr_elist.size());
     out_vlist.emplace_back(0);
     int i = 0;
     int e_size = 0;
@@ -296,11 +315,14 @@ int main(int argc, char **argv) {
     FILE *info;
     fvlist = fopen("csr_vlist.bin", "w");
     felist = fopen("csr_elist.bin", "w");
-    fwrite(&out_vlist[0], sizeof(int), out_vlist.size(), fvlist);
-    fwrite(&out_elist[0], sizeof(int), out_elist.size(), felist);
+    fwrite(out_vlist.data(), sizeof(int), out_vlist.size(), fvlist);
+    fwrite(out_elist.data(), sizeof(int), out_elist.size(), felist);
     info = fopen("info.bin", "w");
     fwrite(&v_cnt, sizeof(int), 1, info);
     fwrite(&rule_cnt, sizeof(int), 1, info);
+    fclose(fvlist);
+    fclose(felist);
+    fclose(info);
     double cr = (double)(csr_vlist.size() + csr_elist.size()) /
                 (out_vlist.size() + out_elist.size());
     fprintf(stderr, "Compression ratio : %.4lf\n", cr);
